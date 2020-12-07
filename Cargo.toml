@@ -1,0 +1,12 @@
+[package]
+name = "rddit-framework-2"
+version = "0.1.0"
+authors = ["Johannes <johannes.thoren@outlook.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde_json = "*"
+reqwest = {version = "*", features = ["blocking"]}
+openssl = { version = "0.10", features = ["vendored"] }
