@@ -662,7 +662,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "rddit-framework-2"
+name = "rddit_framework_2"
 version = "0.1.0"
 dependencies = [
  "openssl",
