@@ -20,11 +20,9 @@
 *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 *   SOFTWARE.
 */
-
-pub mod data_parser;
 pub mod post_handler;
 pub mod url_handler;
-
+pub mod download_handler;
 
 
 #[cfg(test)]
@@ -33,12 +31,13 @@ fn test() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("memes");
     settings.sorting = String::from("hot");
-    settings.count = 10;
     settings.limit = 100;
 
-    let posts = data_parser::get_data(settings);
+    let posts = post_handler::get_all_post_data(settings);
 
-    for post in posts {
-        println!("----------\ntitle : {}\nauthor : {}\npermalink : {}\nurl : {}\n----------\n\n",post.post_title, post.post_author, post.post_permalink, post.post_url)
-    }
+    // for post in &posts {
+    //     println!("----------\ntitle : {}\nauthor : {}\npermalink : {}\nurl : {}\n----------\n\n",post.post_title, post.post_author, post.post_permalink, post.post_url)
+    // }
+
+    download_handler::get_images(10, posts);
 }

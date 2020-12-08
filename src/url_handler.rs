@@ -3,7 +3,6 @@ pub struct Settings {
     pub sorting: String,
     pub subreddit: String,
     pub limit: usize,
-    pub count: usize
 }
 
 impl Settings {
@@ -13,7 +12,6 @@ impl Settings {
             sorting: String::from("hot"),
             subreddit: String::from("memes"),
             limit: 10,
-            count: 10
         }
     }
 }
