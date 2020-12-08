@@ -7,7 +7,7 @@ pub fn get_images(count: usize, posts: Vec<post_handler::Post>) {
     let mut i = 0;
     while i < count {
         println!("{}:x", i);
-
+        println!("{}", &filetypes[1]);
         for filetype in &filetypes {
             if posts[i].post_url.as_str().ends_with(filetype) {
                 println!("{}", posts[i].post_url);
