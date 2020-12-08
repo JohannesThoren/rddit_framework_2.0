@@ -1,5 +1,5 @@
 [package]
-name = "rddit-framework-2"
+name = "rddit_framework_2"
 version = "0.1.0"
 authors = ["Johannes <johannes.thoren@outlook.com>"]
 edition = "2018"
