@@ -31,7 +31,7 @@ fn test() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("memes");
     settings.sorting = String::from("hot");
-    settings.limit = 100;
+    settings.limit = 10;
 
     let posts = post_handler::get_all_post_data(settings);
 
@@ -39,5 +39,8 @@ fn test() {
     //     println!("----------\ntitle : {}\nauthor : {}\npermalink : {}\nurl : {}\n----------\n\n",post.post_title, post.post_author, post.post_permalink, post.post_url)
     // }
 
-    download_handler::get_images(10, posts);
+    let imgs = download_handler::get_images(4, posts);
+    
+    download_handler::download_imgs(imgs, String::from("test/"));
+
 }
