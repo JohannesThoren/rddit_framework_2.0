@@ -1,18 +1,20 @@
 use crate::post_handler;
-use std::fs::File;
 use std::io;
+use std::{fs::File, io::Write};
 
+
+/// img object
 pub struct Img {
     filename: String,
     filetype: String,
-    url: String   
+    url: String,
 }
 
-fn special_char_check(str_to_check:String) -> String {
+fn special_char_check(str_to_check: String) -> String {
     let special_chars = vec!["\\", "/", "\"", "?", ":", "*", "<", ">", "|"];
     let mut new_string = str_to_check;
-    
-    for char in special_chars { 
+
+    for char in special_chars {
         while new_string.contains(char) {
             new_string.remove(new_string.find(char).unwrap());
         }
@@ -20,7 +22,8 @@ fn special_char_check(str_to_check:String) -> String {
     return new_string;
 }
 
-pub fn get_images(wanted_amount: usize, posts: Vec<post_handler::Post>) -> Vec<Img> {
+/// creates a vectro with img objects from a vector of posts and returns it.
+pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<Img> {
     let filetypes = vec!["png", "jpg", "gif"];
 
     let mut images: Vec<Img> = Vec::new();
@@ -36,18 +39,13 @@ pub fn get_images(wanted_amount: usize, posts: Vec<post_handler::Post>) -> Vec<I
 
             let post = &posts[post_index];
 
-            if post
-                .post_url
-                .split(".")
-                .last()
-                .unwrap()
-                .contains(filetypes[f_index])
+            if post.post_url.split(".").last().unwrap().contains(filetypes[f_index])
                 && post.post_url.split(".").last().unwrap().len() <= 3
             {
                 let image = Img {
                     filename: special_char_check(post.post_title.clone()),
                     filetype: String::from(filetypes[f_index]),
-                    url: post.post_url.clone()
+                    url: post.post_url.clone(),
                 };
 
                 images.push(image);
@@ -60,14 +58,43 @@ pub fn get_images(wanted_amount: usize, posts: Vec<post_handler::Post>) -> Vec<I
     return images;
 }
 
-pub fn download_imgs(imgs: Vec<Img>, dest: String) {
+/// This should explain itself..... it downloads images.
+/// create a vector and fill it with img objects.
+pub fn download_imgs(imgs: &Vec<Img>, dest: String) {
     for img in imgs {
-
         println!("{}{}.{}", dest, img.filename, img.filetype);
 
-        let mut out = File::create(format!("{}{}.{}", dest, img.filename, img.filetype).as_str()).expect("could not create file");
+        let mut out = File::create(format!("{}{}.{}", dest, img.filename, img.filetype).as_str())
+            .expect("could not create file");
         let mut data = reqwest::blocking::get(img.url.as_str()).expect("could not fetch data");
-        
+
         io::copy(&mut data, &mut out).expect("could not write data to file");
+    }
+}
+
+// BAD implementation of a text downloader XD
+
+/// Downloads the selftext from a post if there are any
+pub fn download_text(dest: String, posts: &Vec<post_handler::Post>) {
+    for post in posts {
+        if post.post_selftext == "" {
+            println!("no self text")
+        } else {
+            println!(
+                "{}{}.txt",
+                dest,
+                special_char_check(post.post_title.clone())
+            );
+
+            let mut out = File::create(format!(
+                "{}{}.txt",
+                dest,
+                special_char_check(post.post_title.clone())
+            ))
+            .expect("could not create file");
+            let text = post.post_selftext.as_str().as_bytes();
+
+            out.write_all(text);
+        }
     }
 }

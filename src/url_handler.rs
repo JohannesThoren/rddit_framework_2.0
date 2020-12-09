@@ -4,7 +4,7 @@ pub struct Settings {
     pub subreddit: String,
     pub limit: usize,
 }
-
+/// new settings object with standard values
 impl Settings {
     pub fn new() -> Settings {
         Settings {
@@ -16,6 +16,7 @@ impl Settings {
     }
 }
 
+/// creates the url requierd to get data from reddit
 pub fn get_url(settings: &Settings) -> String {
     format!(
         "https://www.reddit.com/r/{}/{}.json?t={}&limit={}",

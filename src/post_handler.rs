@@ -7,7 +7,7 @@ pub struct Post {
     pub post_author: String,
     pub post_selftext: String,
 }
-
+/// new post object thats empty
 impl Post {
     pub fn new() -> Post {
         Post {
@@ -25,8 +25,8 @@ fn get_json(url: &str) -> serde_json::Value {
     let data = serde_json::from_str(body.as_str()).expect("could not parse data from source");
     return data;
 }
-
-pub fn get_all_post_data(settings: url_handler::Settings) -> Vec<Post> {
+/// gets all posts and theire data and returns the posts as a vector
+pub fn get_all_post_data(settings: &url_handler::Settings) -> Vec<Post> {
     let mut posts: Vec<Post> = Vec::new();
 
     let url = url_handler::get_url(&settings);
