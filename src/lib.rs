@@ -39,6 +39,6 @@ fn test() {
     //     println!("----------\ntitle : {}\nauthor : {}\npermalink : {}\nurl : {}\n----------\n\n",post.post_title, post.post_author, post.post_permalink, post.post_url)
     // }
     let imgs = download_handler::get_images(4, &posts);    
-    download_handler::download_imgs(&imgs, String::from("test/"));
-    download_handler::download_text(10, String::from("text/"), &posts);
+    download_handler::download_imgs(&imgs, &String::from("test/"));
+    download_handler::download_text(&10, &String::from("text/"), &posts);
 }
