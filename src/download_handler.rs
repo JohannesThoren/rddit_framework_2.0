@@ -75,26 +75,31 @@ pub fn download_imgs(imgs: &Vec<Img>, dest: String) {
 // BAD implementation of a text downloader XD
 
 /// Downloads the selftext from a post if there are any
-pub fn download_text(dest: String, posts: &Vec<post_handler::Post>) {
-    for post in posts {
-        if post.post_selftext == "" {
+pub fn download_text(wanted_amount: usize, dest: String, posts: &Vec<post_handler::Post>) {
+    let mut text_count = 0;
+    let mut index = 0;
+    while text_count < wanted_amount {
+        if posts[index].post_selftext == "" {
             println!("no self text")
         } else {
             println!(
                 "{}{}.txt",
                 dest,
-                special_char_check(post.post_title.clone())
+                special_char_check(posts[index].post_title.clone())
             );
 
             let mut out = File::create(format!(
                 "{}{}.txt",
                 dest,
-                special_char_check(post.post_title.clone())
+                special_char_check(posts[index].post_title.clone())
             ))
             .expect("could not create file");
-            let text = post.post_selftext.as_str().as_bytes();
+            let text = posts[index].post_selftext.as_str().as_bytes();
 
             out.write_all(text);
+
+            text_count += 1;
         }
+        index += 1;
     }
 }
