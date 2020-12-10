@@ -21,12 +21,17 @@ impl Post {
 }
 
 fn get_json(url: &str) -> serde_json::Value {
+    println!("getting data from reddit");
+
     let body = reqwest::blocking::get(url).unwrap().text().unwrap();
     let data = serde_json::from_str(body.as_str()).expect("could not parse data from source");
     return data;
 }
 /// gets all posts and theire data and returns the posts as a vector
 pub fn get_all_post_data(settings: &url_handler::Settings) -> Vec<Post> {
+    println!("processing post data");
+
+
     let mut posts: Vec<Post> = Vec::new();
 
     let url = url_handler::get_url(&settings);
