@@ -2,7 +2,6 @@ use crate::post_handler;
 use std::io;
 use std::{fs::File, io::Write};
 
-
 /// img object
 pub struct Img {
     filename: String,
@@ -10,15 +9,14 @@ pub struct Img {
     url: String,
 }
 
-fn shorten(str_to_shorten: &String) -> String{
-    let mut new_str = String::new();
-    if str_to_shorten.len() >= 64  {
+fn shorten(str_to_shorten: &String) -> String {
+    let mut new_str = str_to_shorten.clone();
+    if str_to_shorten.len() >= 64 {
         new_str = String::from(str_to_shorten.split_at(64).0);
-
-        println!("{}", new_str)
-    } 
-
-    return new_str
+        // println!("{}", new_str)
+    }
+    // println!("{}", new_str);
+    return new_str;
 }
 
 fn special_char_check(str_to_check: String) -> String {
@@ -42,7 +40,7 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
     let mut image_count = 0;
     let mut post_index = 0;
 
-    while image_count < wanted_amount && image_count < posts.len(){
+    while image_count < wanted_amount && image_count < posts.len() {
         // f_index = filetype index
         for f_index in 0..filetypes.len() {
             // if link is not ending with (jpg, gif or png)
@@ -50,7 +48,12 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
 
             let post = &posts[post_index];
 
-            if post.post_url.split(".").last().unwrap().contains(filetypes[f_index])
+            if post
+                .post_url
+                .split(".")
+                .last()
+                .unwrap()
+                .contains(filetypes[f_index])
                 && post.post_url.split(".").last().unwrap().len() <= 3
             {
                 let image = Img {
@@ -84,12 +87,11 @@ pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
 }
 
 // BAD implementation of a text downloader XD
-
 /// Downloads the selftext from a post if there are any
 pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handler::Post>) {
     let mut text_count = 0;
     let mut index = 0;
-    while text_count < wanted_amount && text_count < posts.len(){
+    while text_count < wanted_amount && text_count < posts.len() {
         if posts[index].post_selftext == "" {
             println!("no self text")
         } else {
