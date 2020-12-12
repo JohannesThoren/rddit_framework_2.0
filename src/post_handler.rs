@@ -29,15 +29,13 @@ fn get_json(url: &str) -> serde_json::Value {
 }
 /// gets all posts and theire data and returns the posts as a vector
 pub fn get_all_post_data(settings: &url_handler::Settings) -> Vec<Post> {
-    println!("processing post data");
-
-
     let mut posts: Vec<Post> = Vec::new();
 
     let url = url_handler::get_url(&settings);
 
     let json_data = get_json(&url);
 
+    println!("processing post data\n\n");
     for index in 0..settings.limit {
         let mut post = Post::new();
 
