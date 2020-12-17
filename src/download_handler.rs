@@ -128,7 +128,7 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
 
     while text_count < wanted_amount && post_index < posts.len() {
         if posts[post_index].post_selftext == "" {
-            println!("no self text")
+            // println!("no self text")
         } else {
             println!(
                 "{}{}.html",
