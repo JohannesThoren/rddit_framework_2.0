@@ -61,7 +61,7 @@ pub fn get_all_post_data(settings: &url_handler::Settings) -> Vec<Post> {
             _ => String::new(),
         };
 
-        post.post_selftext = match &json_data["data"]["children"][index]["data"]["selftext"] {
+        post.post_selftext = match &json_data["data"]["children"][index]["data"]["selftext_html"] {
             serde_json::Value::String(value) => value.clone(),
             _ => String::new(),
         };

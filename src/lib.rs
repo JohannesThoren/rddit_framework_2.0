@@ -30,7 +30,7 @@ pub mod download_handler;
 
 fn test() {
     let mut settings = url_handler::Settings::new();
-    settings.subreddit = String::from("hfy");
+    settings.subreddit = String::from("sweden");
     settings.sorting = String::from("new");
     settings.limit = 10;
 
@@ -41,5 +41,7 @@ fn test() {
     // }
     // let imgs = download_handler::get_images(4, &posts);    
     // download_handler::download_imgs(&imgs, &String::from("test/"));
-    download_handler::download_text(10, &String::from("text/"), &posts);
+    download_handler::download_text(5, &String::from("text/"), &posts);
+
+    
 }

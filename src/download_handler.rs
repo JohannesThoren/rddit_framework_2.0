@@ -1,4 +1,5 @@
 use crate::post_handler;
+use htmlescape::decode_html;
 use std::io;
 use std::{fs::File, io::Write};
 
@@ -91,25 +92,66 @@ pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
 pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handler::Post>) {
     let mut text_count = 0;
     let mut index = 0;
+
+    // some css to make the text look nice
+    let style = String::from(
+        r"
+        <style>
+        body {
+            width: 21cm;
+            min-height: 29.7cm;
+            height: fit-content;
+            height: -moz-fit-content;
+            height: -webkit-fit-content;
+
+            margin-left: auto;
+            margin-right: auto;
+
+            box-shadow: 0 0.25rem 0.5rem 0 black;
+
+            padding: 0.625rem;
+        }
+
+        h1 {
+            text-align: center;
+            text-decoration: underline;
+        }
+
+       @media print {
+           body {
+            box-shadow: none;
+           }
+        }
+        </style>
+    ",
+    );
+
     while text_count < wanted_amount && text_count < posts.len() {
         if posts[index].post_selftext == "" {
             println!("no self text")
         } else {
             println!(
-                "{}{}.txt",
+                "{}{}.html",
                 dest,
                 special_char_check(posts[index].post_title.clone())
             );
 
             let mut out = File::create(format!(
-                "{}{}.txt",
+                "{}{}.html",
                 dest,
                 special_char_check(posts[index].post_title.clone())
             ))
             .expect("could not create file");
-            let text = posts[index].post_selftext.as_str().as_bytes();
 
-            out.write_all(text);
+            let title = &posts[index].post_title;
+            let text = format!(
+                "<head>{}</head><body><h1>{}</h1>{}</body>",
+                style,
+                title,
+                decode_html(posts[index].post_selftext.as_str()).unwrap()
+            );
+
+            out.write_all(text.as_bytes());
 
             text_count += 1;
         }
