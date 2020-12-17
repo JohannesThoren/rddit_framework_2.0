@@ -41,7 +41,7 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
     let mut image_count = 0;
     let mut post_index = 0;
 
-    while image_count < wanted_amount && image_count < posts.len() {
+    while image_count < wanted_amount && post_index < posts.len() {
         // f_index = filetype index
         for f_index in 0..filetypes.len() {
             // if link is not ending with (jpg, gif or png)
@@ -91,7 +91,7 @@ pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
 /// Downloads the selftext from a post if there are any
 pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handler::Post>) {
     let mut text_count = 0;
-    let mut index = 0;
+    let mut post_index = 0;
 
     // some css to make the text look nice
     let style = String::from(
@@ -126,35 +126,35 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
     ",
     );
 
-    while text_count < wanted_amount && text_count < posts.len() {
-        if posts[index].post_selftext == "" {
+    while text_count < wanted_amount && post_index < posts.len() {
+        if posts[post_index].post_selftext == "" {
             println!("no self text")
         } else {
             println!(
                 "{}{}.html",
                 dest,
-                special_char_check(posts[index].post_title.clone())
+                special_char_check(posts[post_index].post_title.clone())
             );
 
             let mut out = File::create(format!(
                 "{}{}.html",
                 dest,
-                special_char_check(posts[index].post_title.clone())
+                special_char_check(posts[post_index].post_title.clone())
             ))
             .expect("could not create file");
 
-            let title = &posts[index].post_title;
+            let title = &posts[post_index].post_title;
             let text = format!(
                 "<head>{}</head><body><h1>{}</h1>{}</body>",
                 style,
                 title,
-                decode_html(posts[index].post_selftext.as_str()).unwrap()
+                decode_html(posts[post_index].post_selftext.as_str()).unwrap()
             );
 
             out.write_all(text.as_bytes());
 
             text_count += 1;
         }
-        index += 1;
+        post_index += 1;
     }
 }
