@@ -34,7 +34,7 @@ fn test() {
     settings.sorting = String::from("new");
     settings.limit = 10;
 
-    let posts = post_handler::get_all_post_data(&settings);
+    let posts = post_handler::get_all_post_data(&mut settings);
 
     // for post in &posts {
     //     println!("----------\ntitle : {}\nauthor : {}\npermalink : {}\nurl : {}\n----------\n\n",post.post_title, post.post_author, post.post_permalink, post.post_url)

@@ -17,7 +17,12 @@ impl Settings {
 }
 
 /// creates the url requierd to get data from reddit
-pub fn get_url(settings: &Settings) -> String {
+pub fn get_url(settings: &mut Settings) -> String {
+    if settings.limit > 100 {
+        println!("reddit can only handle a limit of max 100");
+        settings.limit = 100;
+    }
+
     format!(
         "https://www.reddit.com/r/{}/{}.json?t={}&limit={}",
         settings.subreddit,
