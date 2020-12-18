@@ -12,6 +12,10 @@ pub struct Img {
 
 fn shorten(str_to_shorten: &String) -> String {
     let mut new_str = str_to_shorten.clone();
+
+    // this line should remove all none ascii chars
+    new_str.replace(|c:char | !c.is_ascii(), "");
+
     if str_to_shorten.len() >= 64 {
         new_str = String::from(str_to_shorten.split_at(64).0);
         // println!("{}", new_str)

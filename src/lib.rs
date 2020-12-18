@@ -30,7 +30,7 @@ pub mod download_handler;
 
 fn test() {
     let mut settings = url_handler::Settings::new();
-    settings.subreddit = String::from("sweden");
+    settings.subreddit = String::from("nsfw");
     settings.sorting = String::from("new");
     settings.limit = 10;
 
