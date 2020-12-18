@@ -30,18 +30,18 @@ pub mod download_handler;
 
 fn test() {
     let mut settings = url_handler::Settings::new();
-    settings.subreddit = String::from("nsfw");
-    settings.sorting = String::from("new");
-    settings.limit = 10;
+    settings.subreddit = String::from("dankmemes");
+    // settings.sorting = String::from("");
+    settings.limit = 100;
+
 
     let posts = post_handler::get_all_post_data(&mut settings);
 
     // for post in &posts {
     //     println!("----------\ntitle : {}\nauthor : {}\npermalink : {}\nurl : {}\n----------\n\n",post.post_title, post.post_author, post.post_permalink, post.post_url)
-    // }
-    // let imgs = download_handler::get_images(4, &posts);    
-    // download_handler::download_imgs(&imgs, &String::from("test/"));
-    download_handler::download_text(5, &String::from("text/"), &posts);
+    let imgs = download_handler::get_images(100, &posts);    
+    download_handler::download_imgs(&imgs, &String::from("post/"));
+    // download_handler::download_text(5, &String::from("text/"), &posts);
 
     
 }

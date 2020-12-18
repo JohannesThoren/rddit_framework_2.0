@@ -12,13 +12,13 @@ pub struct Img {
 
 fn shorten(str_to_shorten: &String) -> String {
     let mut new_str = str_to_shorten.clone();
+    let chars: Vec<char> = str_to_shorten.chars().collect();
 
-    // this line should remove all none ascii chars
-    new_str.replace(|c:char | !c.is_ascii(), "");
+    if chars.len() > 64 {
+        
+        new_str = chars[0..64].iter().collect();
 
-    if str_to_shorten.len() >= 64 {
-        new_str = String::from(str_to_shorten.split_at(64).0);
-        // println!("{}", new_str)
+        println!("{}", new_str)
     }
     // println!("{}", new_str);
     return new_str;
