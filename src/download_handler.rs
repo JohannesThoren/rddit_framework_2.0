@@ -1,3 +1,26 @@
+/*
+ *   Copyright (c) 2020 Johannes Thorén
+ *   All rights reserved.
+
+ *   Permission is hereby granted, free of charge, to any person obtaining a copy
+ *   of this software and associated documentation files (the "Software"), to deal
+ *   in the Software without restriction, including without limitation the rights
+ *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *   copies of the Software, and to permit persons to whom the Software is
+ *   furnished to do so, subject to the following conditions:
+ 
+ *   The above copyright notice and this permission notice shall be included in all
+ *   copies or substantial portions of the Software.
+ 
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *   SOFTWARE.
+ */
+
 use crate::post_handler;
 use htmlescape::decode_html;
 use std::io;
@@ -149,7 +172,8 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
 
             let title = &posts[post_index].post_title;
             let text = format!(
-                "<head>{}</head><body><h1>{}</h1>{}</body>",
+                "<head>{}</head><body><h1><a href = \"{}\">{}</a></h1>{}</body>",
+                posts[post_index].post_url
                 style,
                 title,
                 decode_html(posts[post_index].post_selftext.as_str()).unwrap()
