@@ -84,24 +84,42 @@ fn test_search() {
     let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in result{
-        println!("{} | {}", post.post_author, post.post_title)
+        println!("RESULT [ auth : {} | title: {} ]", post.post_author, post.post_title)
     }
 }
 #[test]
 fn test_seacrh_dl_img() {
     let mut settings = url_handler::Settings::new();
-    settings.subreddit = String::from("sweden");
+    settings.subreddit = String::from("sverige");
     settings.limit = 100;
     settings.sorting = String::from("new");
 
     let mut posts = post_handler::get_data(&mut settings);
-    let result = post_handler::search_post(posts.clone(), &mut String::from("Tack"));
+    let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in &result{
-        println!("{} | {}", post.post_author, post.post_title)
+        println!("RESULT [ auth : {} | title: {} ]", post.post_author, post.post_title)
     }
 
 
-    let imgs = download_handler::get_images(1, &result);
+    let imgs = download_handler::get_images(5, &result);
     download_handler::download_imgs(&imgs, &String::from("imgs/"))
+}
+
+#[test]
+fn test_seacrh_dl_txt() {
+    let mut settings = url_handler::Settings::new();
+    settings.subreddit = String::from("sverige");
+    settings.limit = 100;
+    settings.sorting = String::from("new");
+
+    let mut posts = post_handler::get_data(&mut settings);
+    let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
+
+    for post in &result{
+        println!("RESULT [ auth : {} | title: {} ]", post.post_author, post.post_title)
+    }
+
+
+    download_handler::download_text(5, &String::from("text/"), &result);
 }

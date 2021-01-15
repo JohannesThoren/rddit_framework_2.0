@@ -101,7 +101,6 @@ pub fn search_post(posts: Vec<Post>, keyword: &mut String) -> Vec<Post>{
 
     let mut result = Vec::new();
 
-
     for post in  posts{
         if post.post_title.contains(keyword.as_str()) {
             result.push(post)
