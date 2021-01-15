@@ -143,7 +143,12 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
 
             let title = &posts[post_index].post_title;
             let text = format!(
+<<<<<<< HEAD
                 "<head>  </head><body><h1><a href = \"{}\">{}</a></h1>{}</body>",
+=======
+                "<head>{}</head><body><h1><a href=\"{}\">{}</a></h1>{}</body>",
+                style,
+>>>>>>> 2e13f7a53ecd3841a9f9a1b17040637afda18aaa
                 posts[post_index].post_url,
                 title,
                 decode_html(posts[post_index].post_selftext.as_str()).unwrap()
