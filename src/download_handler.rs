@@ -118,7 +118,7 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
     let mut post_index = 0;
 
     //get css style sheet from the style.css file
-    let style = std::fs::read_to_string("src/style.css").expect("could not open css file!");
+    let style = String::from(include_str!("style.css"));
 
     // TODO move all html code to somewhere
     while text_count < wanted_amount && post_index < posts.len() {
