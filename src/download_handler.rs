@@ -1,30 +1,30 @@
 /*
- *   Copyright (c) 2020 Johannes Thorén
- *   All rights reserved.
+*   Copyright (c) 2020 Johannes Thorén
+*   All rights reserved.
 
- *   Permission is hereby granted, free of charge, to any person obtaining a copy
- *   of this software and associated documentation files (the "Software"), to deal
- *   in the Software without restriction, including without limitation the rights
- *   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- *   copies of the Software, and to permit persons to whom the Software is
- *   furnished to do so, subject to the following conditions:
- 
- *   The above copyright notice and this permission notice shall be included in all
- *   copies or substantial portions of the Software.
- 
- *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- *   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- *   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- *   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- *   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- *   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- *   SOFTWARE.
- */
+*   Permission is hereby granted, free of charge, to any person obtaining a copy
+*   of this software and associated documentation files (the "Software"), to deal
+*   in the Software without restriction, including without limitation the rights
+*   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+*   copies of the Software, and to permit persons to whom the Software is
+*   furnished to do so, subject to the following conditions:
+
+*   The above copyright notice and this permission notice shall be included in all
+*   copies or substantial portions of the Software.
+
+*   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+*   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+*   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+*   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+*   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+*   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+*   SOFTWARE.
+*/
 
 use crate::post_handler;
 use htmlescape::decode_html;
 use std::io;
-use std::{fs::File, io::Write};
+use std::{fs::*, io::Write};
 
 /// img object
 pub struct Img {
@@ -38,7 +38,6 @@ fn shorten(str_to_shorten: &String) -> String {
     let chars: Vec<char> = str_to_shorten.chars().collect();
 
     if chars.len() > 64 {
-        
         new_str = chars[0..64].iter().collect();
 
         println!("{}", new_str)
@@ -68,7 +67,6 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
     let mut post_index = 0;
 
     while image_count < wanted_amount && post_index < posts.len() {
- 
         for f_index in 0..filetypes.len() {
             // if link is not ending with (jpg, gif or png)
             // then check next
@@ -119,11 +117,10 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
     let mut text_count = 0;
     let mut post_index = 0;
 
-    // some css to make the html look nice
-    // TODO move this shit to github or something
+    //get css style sheet from the style.css file
+    let style = std::fs::read_to_string("src/style.css").expect("could not open css file!");
 
-
-    // TODO move all html code to somewhere 
+    // TODO move all html code to somewhere
     while text_count < wanted_amount && post_index < posts.len() {
         if posts[post_index].post_selftext == "" {
             // println!("no self text")
@@ -143,12 +140,8 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
 
             let title = &posts[post_index].post_title;
             let text = format!(
-<<<<<<< HEAD
-                "<head>  </head><body><h1><a href = \"{}\">{}</a></h1>{}</body>",
-=======
-                "<head>{}</head><body><h1><a href=\"{}\">{}</a></h1>{}</body>",
+                "<head>\n<style>\n{}\n</style>\n</head>\n<body>\n<h1><a href = '{}'>{}</a></h1>\n{}\n</body>",
                 style,
->>>>>>> 2e13f7a53ecd3841a9f9a1b17040637afda18aaa
                 posts[post_index].post_url,
                 title,
                 decode_html(posts[post_index].post_selftext.as_str()).unwrap()

@@ -23,6 +23,7 @@
 
 use crate::url_handler;
 use serde_json;
+#[derive(Debug, Clone)]
 pub struct Post {
     pub post_title: String,
     pub post_url: String,
@@ -52,7 +53,7 @@ fn get_json(url: &str) -> serde_json::Value {
     return data;
 }
 /// gets all posts and theire data and returns the posts as a vector
-pub fn get_all_post_data(settings: &mut url_handler::Settings) -> Vec<Post> {
+pub fn get_data(settings: &mut url_handler::Settings) -> Vec<Post> {
     let mut posts: Vec<Post> = Vec::new();
 
     let url = url_handler::get_url(settings);
@@ -63,7 +64,7 @@ pub fn get_all_post_data(settings: &mut url_handler::Settings) -> Vec<Post> {
     for index in 0..settings.limit {
         let mut post = Post::new();
 
-        // json parsing.  getting all data requierd
+        // json parsing.  getting all data requirer
         // getting: author, permalink, title, url, selftext
         // pusing the data to the posts vec as a post object
 
@@ -92,6 +93,20 @@ pub fn get_all_post_data(settings: &mut url_handler::Settings) -> Vec<Post> {
 
         posts.push(post);
     }
-
     return posts;
+}
+
+
+pub fn search_post(posts: Vec<Post>, keyword: &mut String) -> Vec<Post>{
+
+    let mut result = Vec::new();
+
+
+    for post in  posts{
+        if post.post_title.contains(keyword.as_str()) {
+            result.push(post)
+        }
+    }
+    return result;
+
 }
