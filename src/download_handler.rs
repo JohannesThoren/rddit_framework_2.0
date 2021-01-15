@@ -43,7 +43,6 @@ fn shorten(str_to_shorten: &String) -> String {
 
         println!("{}", new_str)
     }
-    // println!("{}", new_str);
     return new_str;
 }
 
@@ -69,7 +68,7 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
     let mut post_index = 0;
 
     while image_count < wanted_amount && post_index < posts.len() {
-        // f_index = filetype index
+ 
         for f_index in 0..filetypes.len() {
             // if link is not ending with (jpg, gif or png)
             // then check next
@@ -120,39 +119,11 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
     let mut text_count = 0;
     let mut post_index = 0;
 
-    // some css to make the text look nice
-    let style = String::from(
-        r"
-        <style>
-        body {
-            width: 21cm;
-            min-height: 29.7cm;
-            height: fit-content;
-            height: -moz-fit-content;
-            height: -webkit-fit-content;
+    // some css to make the html look nice
+    // TODO move this shit to github or something
 
-            margin-left: auto;
-            margin-right: auto;
 
-            box-shadow: 0 0.25rem 0.5rem 0 black;
-
-            padding: 0.625rem;
-        }
-
-        h1 {
-            text-align: center;
-            text-decoration: underline;
-        }
-
-       @media print {
-           body {
-            box-shadow: none;
-           }
-        }
-        </style>
-    ",
-    );
-
+    // TODO move all html code to somewhere 
     while text_count < wanted_amount && post_index < posts.len() {
         if posts[post_index].post_selftext == "" {
             // println!("no self text")
@@ -172,9 +143,8 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handl
 
             let title = &posts[post_index].post_title;
             let text = format!(
-                "<head>{}</head><body><h1><a href = \"{}\">{}</a></h1>{}</body>",
+                "<head>  </head><body><h1><a href = \"{}\">{}</a></h1>{}</body>",
                 posts[post_index].post_url,
-                style,
                 title,
                 decode_html(posts[post_index].post_selftext.as_str()).unwrap()
             );
