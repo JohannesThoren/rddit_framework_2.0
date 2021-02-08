@@ -13,13 +13,29 @@ body {
     padding: 0.625rem;
 }
 
+table {
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid;
+    border-collapse: collapse;
+}
+
+table,
+td,
+th {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+
+
 h1 {
     text-align: center;
     text-decoration: underline;
 }
 
 @media print {
-   body {
-    box-shadow: none;
-   }
+    body {
+        box-shadow: none;
+    }
 }
