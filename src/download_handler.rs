@@ -97,6 +97,7 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
     return images;
 }
 
+// TODO see if it is possible to make this better
 /// This should explain itself..... it downloads images.
 /// create a vector and fill it with img objects.
 pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
@@ -112,6 +113,7 @@ pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
 }
 
 // BAD implementation of a text downloader XD
+// TODO create a better way of downloading text
 /// Downloads the selftext from a post if there are any
 pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handler::Post>) {
     let mut text_count = 0;

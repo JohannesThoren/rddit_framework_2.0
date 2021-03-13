@@ -58,35 +58,39 @@ pub fn get_data(settings: &mut url_handler::Settings) -> Vec<Post> {
 
     let url = url_handler::get_url(settings);
 
-    let json_data = get_json(&url);
+    let children = &get_json(&url)["data"]["children"];
 
     println!("processing post data\n\n");
-    for index in 0..settings.limit {
+
+    // so basically  "children.as_array().unwrap().len()" creates an array of all children, unwraps it and gets the len
+    // so i can iterate over the len.
+    // maybe a bodge but it works.
+    for index in 0..children.as_array().unwrap().len() {
         let mut post = Post::new();
 
         // json parsing.  getting all data requirer
         // getting: author, permalink, title, url, selftext
         // pusing the data to the posts vec as a post object
 
-        post.post_author = match &json_data["data"]["children"][index]["data"]["author"] {
+        post.post_author = match &children[index]["data"]["author"] {
             serde_json::Value::String(value) => value.clone(),
             _ => String::new(),
         };
-        post.post_permalink = match &json_data["data"]["children"][index]["data"]["permalink"] {
+        post.post_permalink = match &children[index]["data"]["permalink"] {
             serde_json::Value::String(value) => value.clone(),
             _ => String::new(),
         };
-        post.post_title = match &json_data["data"]["children"][index]["data"]["title"] {
-            serde_json::Value::String(value) => value.clone(),
-            _ => String::new(),
-        };
-
-        post.post_url = match &json_data["data"]["children"][index]["data"]["url"] {
+        post.post_title = match &children[index]["data"]["title"] {
             serde_json::Value::String(value) => value.clone(),
             _ => String::new(),
         };
 
-        post.post_selftext = match &json_data["data"]["children"][index]["data"]["selftext_html"] {
+        post.post_url = match &children[index]["data"]["url"] {
+            serde_json::Value::String(value) => value.clone(),
+            _ => String::new(),
+        };
+
+        post.post_selftext = match &children[index]["data"]["selftext_html"] {
             serde_json::Value::String(value) => value.clone(),
             _ => String::new(),
         };

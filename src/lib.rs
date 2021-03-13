@@ -29,7 +29,6 @@ pub mod url_handler;
 fn test_img_dl() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("memes");
-    settings.limit = 100;
 
     let posts = post_handler::get_data(&mut settings);
     let imgs = download_handler::get_images(10, &posts);
@@ -39,7 +38,6 @@ fn test_img_dl() {
 fn test_txt_dl() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("sverige");
-    settings.limit = 100;
 
     let posts = post_handler::get_data(&mut settings);
     download_handler::download_text(10, &String::from("text/"), &posts)
@@ -48,8 +46,6 @@ fn test_txt_dl() {
 fn test_search() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("sverige");
-    settings.limit = 100;
-
     let posts = post_handler::get_data(&mut settings);
     let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
 
@@ -64,7 +60,6 @@ fn test_search() {
 fn test_seacrh_dl_img() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("sverige");
-    settings.limit = 100;
     settings.sorting = String::from("new");
 
     let mut posts = post_handler::get_data(&mut settings);
@@ -85,7 +80,7 @@ fn test_seacrh_dl_img() {
 fn test_seacrh_dl_txt() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("sverige");
-    settings.limit = 100;
+
     settings.sorting = String::from("new");
 
     let mut posts = post_handler::get_data(&mut settings);
@@ -106,13 +101,12 @@ fn test_seacrh_dl_txt() {
 fn get_img_url() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("dankmemes");
-    settings.limit = 100;
+
     settings.sorting = String::from("new");
 
     let mut posts = post_handler::get_data(&mut settings);
 
-    let imgs = download_handler::get_images(5, &posts);
-    for img in imgs {
-        println!("{}", img.url)
+    for post in posts {
+        println!("{}", post.post_url)
     }
 }
