@@ -30,7 +30,7 @@ use std::{fs::*, io::Write};
 pub struct Img {
     filename: String,
     filetype: String,
-    url: String,
+    pub url: String,
 }
 
 fn shorten(str_to_shorten: &String) -> String {
