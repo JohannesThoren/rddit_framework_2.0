@@ -28,10 +28,10 @@ pub mod url_handler;
 #[test]
 fn test_img_dl() {
     let mut settings = url_handler::Settings::new();
-    settings.subreddit = String::from("memes");
+    settings.subreddit = String::from("dankmemes");
 
     let posts = post_handler::get_data(&mut settings);
-    let imgs = download_handler::get_images(10, &posts);
+    let imgs = download_handler::get_images(100, &posts);
     download_handler::download_imgs(&imgs, &String::from("imgs/"));
 }
 #[test]

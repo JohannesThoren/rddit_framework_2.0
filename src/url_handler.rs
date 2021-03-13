@@ -25,7 +25,6 @@ pub struct Settings {
     pub timespan: String,
     pub sorting: String,
     pub subreddit: String,
-//    pub limit: usize,
 }
 /// new settings object with standard values
 impl Settings {
