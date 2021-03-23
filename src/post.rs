@@ -21,7 +21,7 @@
  *   SOFTWARE.
  */
 
-use crate::url_handler;
+use crate::url;
 use serde_json;
 #[derive(Debug, Clone)]
 pub struct Post {
@@ -53,10 +53,10 @@ fn get_json(url: &str) -> serde_json::Value {
     return data;
 }
 /// gets all posts and theire data and returns the posts as a vector
-pub fn data(settings: &mut url_handler::Settings) -> Vec<Post> {
+pub fn data(settings: &mut url::Settings) -> Vec<Post> {
     let mut posts: Vec<Post> = Vec::new();
 
-    let url = url_handler::get_url(settings);
+    let url = url::get_url(settings);
 
     let children = &get_json(&url)["data"]["children"];
 

@@ -21,33 +21,33 @@
 *   SOFTWARE.
 */
 
-pub mod download_handler;
-pub mod post_handler;
-pub mod url_handler;
+pub mod download;
+pub mod post;
+pub mod url;
 
 #[test]
 fn test_img_dl() {
-    let mut settings = url_handler::Settings::new();
+    let mut settings = url::Settings::new();
     settings.subreddit = String::from("dankmemes");
 
-    let posts = post_handler::data(&mut settings);
-    let imgs = download_handler::img_data(100, &posts);
-    download_handler::download_imgs(&imgs, &String::from("imgs/"));
+    let posts = post::data(&mut settings);
+    let imgs = download::img_data(100, &posts);
+    download::download_imgs(&imgs, &String::from("imgs/"));
 }
 #[test]
 fn test_txt_dl() {
-    let mut settings = url_handler::Settings::new();
+    let mut settings = url::Settings::new();
     settings.subreddit = String::from("sverige");
 
-    let posts = post_handler::data(&mut settings);
-    download_handler::download_text(10, &String::from("text/"), &posts)
+    let posts = post::data(&mut settings);
+    download::download_text(10, &String::from("text/"), &posts)
 }
 #[test]
 fn test_search() {
-    let mut settings = url_handler::Settings::new();
+    let mut settings = url::Settings::new();
     settings.subreddit = String::from("sverige");
-    let posts = post_handler::data(&mut settings);
-    let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
+    let posts = post::data(&mut settings);
+    let result = post::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in result {
         println!(
@@ -58,12 +58,12 @@ fn test_search() {
 }
 #[test]
 fn test_seacrh_dl_img() {
-    let mut settings = url_handler::Settings::new();
+    let mut settings = url::Settings::new();
     settings.subreddit = String::from("sverige");
     settings.sorting = String::from("new");
 
-    let mut posts = post_handler::data(&mut settings);
-    let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
+    let mut posts = post::data(&mut settings);
+    let result = post::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in &result {
         println!(
@@ -72,19 +72,19 @@ fn test_seacrh_dl_img() {
         )
     }
 
-    let imgs = download_handler::img_data(5, &result);
-    download_handler::download_imgs(&imgs, &String::from("imgs/"))
+    let imgs = download::img_data(5, &result);
+    download::download_imgs(&imgs, &String::from("imgs/"))
 }
 
 #[test]
 fn test_seacrh_dl_txt() {
-    let mut settings = url_handler::Settings::new();
+    let mut settings = url::Settings::new();
     settings.subreddit = String::from("sverige");
 
     settings.sorting = String::from("new");
 
-    let mut posts = post_handler::data(&mut settings);
-    let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
+    let mut posts = post::data(&mut settings);
+    let result = post::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in &result {
         println!(
@@ -93,18 +93,18 @@ fn test_seacrh_dl_txt() {
         )
     }
 
-    download_handler::download_text(5, &String::from("text/"), &result);
+    download::download_text(5, &String::from("text/"), &result);
 }
 
 #[test]
 
 fn get_img_url() {
-    let mut settings = url_handler::Settings::new();
+    let mut settings = url::Settings::new();
     settings.subreddit = String::from("dankmemes");
 
     settings.sorting = String::from("new");
 
-    let mut posts = post_handler::data(&mut settings);
+    let mut posts = post::data(&mut settings);
 
     for post in posts {
         println!("{}", post.post_url)

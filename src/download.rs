@@ -21,7 +21,7 @@
 *   SOFTWARE.
 */
 
-use crate::post_handler;
+use crate::post;
 use htmlescape::decode_html;
 use std::io;
 use std::{fs::*, io::Write};
@@ -58,7 +58,7 @@ fn special_char_check(str_to_check: String) -> String {
 }
 
 /// creates a vector with img objects from a vector of posts and returns it.
-pub fn img_data(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<Img> {
+pub fn img_data(wanted_amount: usize, posts: &Vec<post::Post>) -> Vec<Img> {
     let filetypes = vec!["png", "jpg", "gif"];
 
     let mut images: Vec<Img> = Vec::new();
@@ -116,7 +116,7 @@ pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
 // BAD implementation of a text downloader XD
 // TODO create a better way of downloading text
 /// Downloads the selftext from a post if there are any
-pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post_handler::Post>) {
+pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post::Post>) {
     let mut text_count = 0;
     let mut post_index = 0;
 
