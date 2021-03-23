@@ -46,7 +46,6 @@ impl Post {
 
 fn get_json(url: &str) -> serde_json::Value {
 
-    println!("getting data from reddit");
 
     let body = reqwest::blocking::get(url).unwrap().text().unwrap();
     let data = serde_json::from_str(body.as_str()).expect("could not parse data from source");
@@ -60,7 +59,6 @@ pub fn data(settings: &mut url::Settings) -> Vec<Post> {
 
     let children = &get_json(&url)["data"]["children"];
 
-    println!("processing post data\n\n");
 
     // so basically  "children.as_array().unwrap().len()" creates an array of all children, unwraps it and gets the len
     // so i can iterate over the len.

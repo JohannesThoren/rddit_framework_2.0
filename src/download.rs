@@ -39,8 +39,6 @@ fn shorten(str_to_shorten: &String) -> String {
 
     if chars.len() > 64 {
         new_str = chars[0..64].iter().collect();
-
-        println!("{}", new_str)
     }
     return new_str;
 }
@@ -103,7 +101,6 @@ pub fn img_data(wanted_amount: usize, posts: &Vec<post::Post>) -> Vec<Img> {
 /// create a vector and fill it with img objects.
 pub fn download_imgs(imgs: &Vec<Img>, dest: &String) {
     for img in imgs {
-        println!("{}{}.{}", dest, img.filename, img.filetype);
 
         let mut out = File::create(format!("{}{}.{}", dest, img.filename, img.filetype).as_str())
             .expect("could not create file");
@@ -128,12 +125,6 @@ pub fn download_text(wanted_amount: usize, dest: &String, posts: &Vec<post::Post
         if posts[post_index].post_selftext == "" {
             // println!("no self text")
         } else {
-            println!(
-                "{}{}.html",
-                dest,
-                special_char_check(posts[post_index].post_title.clone())
-            );
-
             let mut out = File::create(format!(
                 "{}{}.html",
                 dest,
