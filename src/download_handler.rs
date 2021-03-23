@@ -57,8 +57,8 @@ fn special_char_check(str_to_check: String) -> String {
     return shorten(&new_string);
 }
 
-/// creates a vectro with img objects from a vector of posts and returns it.
-pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<Img> {
+/// creates a vector with img objects from a vector of posts and returns it.
+pub fn img_data(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<Img> {
     let filetypes = vec!["png", "jpg", "gif"];
 
     let mut images: Vec<Img> = Vec::new();
@@ -96,6 +96,7 @@ pub fn get_images(wanted_amount: usize, posts: &Vec<post_handler::Post>) -> Vec<
 
     return images;
 }
+
 
 // TODO see if it is possible to make this better
 /// This should explain itself..... it downloads images.

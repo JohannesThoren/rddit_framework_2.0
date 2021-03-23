@@ -30,8 +30,8 @@ fn test_img_dl() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("dankmemes");
 
-    let posts = post_handler::get_data(&mut settings);
-    let imgs = download_handler::get_images(100, &posts);
+    let posts = post_handler::data(&mut settings);
+    let imgs = download_handler::img_data(100, &posts);
     download_handler::download_imgs(&imgs, &String::from("imgs/"));
 }
 #[test]
@@ -39,14 +39,14 @@ fn test_txt_dl() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("sverige");
 
-    let posts = post_handler::get_data(&mut settings);
+    let posts = post_handler::data(&mut settings);
     download_handler::download_text(10, &String::from("text/"), &posts)
 }
 #[test]
 fn test_search() {
     let mut settings = url_handler::Settings::new();
     settings.subreddit = String::from("sverige");
-    let posts = post_handler::get_data(&mut settings);
+    let posts = post_handler::data(&mut settings);
     let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in result {
@@ -62,7 +62,7 @@ fn test_seacrh_dl_img() {
     settings.subreddit = String::from("sverige");
     settings.sorting = String::from("new");
 
-    let mut posts = post_handler::get_data(&mut settings);
+    let mut posts = post_handler::data(&mut settings);
     let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in &result {
@@ -72,7 +72,7 @@ fn test_seacrh_dl_img() {
         )
     }
 
-    let imgs = download_handler::get_images(5, &result);
+    let imgs = download_handler::img_data(5, &result);
     download_handler::download_imgs(&imgs, &String::from("imgs/"))
 }
 
@@ -83,7 +83,7 @@ fn test_seacrh_dl_txt() {
 
     settings.sorting = String::from("new");
 
-    let mut posts = post_handler::get_data(&mut settings);
+    let mut posts = post_handler::data(&mut settings);
     let result = post_handler::search_post(posts.clone(), &mut String::from("nyheter"));
 
     for post in &result {
@@ -104,7 +104,7 @@ fn get_img_url() {
 
     settings.sorting = String::from("new");
 
-    let mut posts = post_handler::get_data(&mut settings);
+    let mut posts = post_handler::data(&mut settings);
 
     for post in posts {
         println!("{}", post.post_url)
